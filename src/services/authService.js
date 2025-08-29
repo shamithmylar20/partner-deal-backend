@@ -12,7 +12,7 @@ class AuthService {
     passport.use(new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.GOOGLE_CALLBACK_URL || '/api/v1/auth/google/callback',
+      callbackURL: "https://partner-deal-backend-production.up.railway.app/api/v1/auth/google/callback",
       scope: ['profile', 'email'] // Explicitly request email scope
     }, async (accessToken, refreshToken, profile, done) => {
       try {
