@@ -197,21 +197,27 @@ router.get('/google/callback',
     try {
       const { user, accessToken } = req.user;
       
-      // Import the checkAdminStatus function
       const { checkAdminStatus } = require('../middleware/auth');
-      
-      // Check if user should be admin based on Admins sheet
       const isAdmin = await checkAdminStatus(user.email);
       
-      // Override role based on Admins sheet check
       const updatedUser = {
         ...user,
         role: isAdmin ? 'admin' : user.role || 'user'
       };
       
-      // Use the correct frontend URL
-      const frontendURL = process.env.FRONTEND_URL || 'http://localhost:8080'; // Changed from 8080
-      res.redirect(`${frontendURL}/auth/callback?token=${accessToken}&user=${encodeURIComponent(JSON.stringify(updatedUser))}`);
+      // Use environment variable for frontend URL
+      const frontendURL = process.env.FRONTEND_URL;
+      console.log('OAuth Redirect - FRONTEND_URL:', frontendURL);
+      
+      if (!frontendURL) {
+        console.error('FRONTEND_URL environment variable not set!');
+        return res.status(500).json({ error: 'Configuration error' });
+      }
+      
+      const redirectUrl = `${frontendURL}/auth/callback?token=${accessToken}&user=${encodeURIComponent(JSON.stringify(updatedUser))}`;
+      console.log('Redirecting to:', redirectUrl);
+      
+      res.redirect(redirectUrl);
     } catch (error) {
       console.error('Google callback error:', error);
       const frontendURL = process.env.FRONTEND_URL || 'http://localhost:8080';
