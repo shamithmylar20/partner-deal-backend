@@ -7,20 +7,20 @@ const rateLimit = require('express-rate-limit');
 require('express-async-errors');
 require('dotenv').config();
 
-
 // Import route modules
 const authRoutes = require('./routes/auth');
 const dealRoutes = require('./routes/deals');
 const adminRoutes = require('./routes/admin');
 
-
-
 const app = express();
+
+// Fix Railway proxy issue - add this early
+app.set('trust proxy', 1);
 
 // Security middleware
 app.use(helmet());
 
-// Rate limiting
+// Rate limiting - now works with trust proxy
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // limit each IP to 100 requests per windowMs
