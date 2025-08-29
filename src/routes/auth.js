@@ -210,11 +210,11 @@ router.get('/google/callback',
       };
       
       // Use the correct frontend URL
-      const frontendURL = 'http://localhost:8080'; // Changed from 8080
+      const frontendURL = process.env.FRONTEND_URL || 'http://localhost:8080'; // Changed from 8080
       res.redirect(`${frontendURL}/auth/callback?token=${accessToken}&user=${encodeURIComponent(JSON.stringify(updatedUser))}`);
     } catch (error) {
       console.error('Google callback error:', error);
-      const frontendURL = 'http://localhost:8080';
+      const frontendURL = process.env.FRONTEND_URL || 'http://localhost:8080';
       res.redirect(`${frontendURL}/auth?error=google_auth_failed`);
     }
   }
