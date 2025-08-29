@@ -220,6 +220,15 @@ router.get('/google/callback',
   }
 );
 
+// Add this debug route temporarily
+router.get('/debug-frontend-url', (req, res) => {
+  res.json({
+    FRONTEND_URL: process.env.FRONTEND_URL,
+    NODE_ENV: process.env.NODE_ENV,
+    all_env: Object.keys(process.env).filter(key => key.includes('FRONTEND'))
+  });
+});
+
 /**
  * @route GET /api/v1/auth/me
  * @desc Get current user info (requires auth middleware)
