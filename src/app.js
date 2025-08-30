@@ -130,7 +130,7 @@ app.get('/api/v1/debug-oauth', (req, res) => {
     googleClientId: process.env.GOOGLE_CLIENT_ID ? 'SET' : 'MISSING',
     googleClientSecret: process.env.GOOGLE_CLIENT_SECRET ? 'SET' : 'MISSING',
     callbackUrl: process.env.GOOGLE_CALLBACK_URL,
-    authUrl: `http://localhost:3001/api/v1/auth/google`
+    authUrl: 'https://partner-deal-backend.onrender.com/api/v1/auth/google'
   });
 });
 

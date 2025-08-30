@@ -209,7 +209,7 @@ router.get('/google/callback',
       };
       
       // HARDCODED frontend URL to fix deployment issue
-      const frontendURL = 'https://partner-deal-registration-mc37bncpt-shamiths-projects-c74c59b6.vercel.app';
+      const frontendURL = process.env.FRONTEND_URL || 'http://localhost:8080';
       
       console.log('OAuth Redirect - Using hardcoded frontend URL:', frontendURL);
       console.log('User role after admin check:', updatedUser.role);
@@ -223,7 +223,7 @@ router.get('/google/callback',
       console.error('Google callback error:', error);
       
       // Also hardcode the error redirect
-      const frontendURL = 'https://partner-deal-registration-mc37bncpt-shamiths-projects-c74c59b6.vercel.app';
+      const frontendURL = process.env.FRONTEND_URL || 'http://localhost:8080';
       res.redirect(`${frontendURL}/auth?error=google_auth_failed`);
     }
   }
